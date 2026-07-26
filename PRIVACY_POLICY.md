@@ -20,21 +20,14 @@ Because your data lives only on your device:
 
 ## Network access
 
-Whittle uses your device's network connection for exactly two purposes:
+The apps you build are served to the app's built-in viewer from a **local-only preview server** that runs *inside the app on your device* (localhost). It is not reachable from the internet and sends nothing anywhere.
 
-1. **Downloading the on-device AI model (optional).** If you enable the built-in AI assistant, the app downloads a language model file (approximately 1 GB) directly from [Hugging Face](https://huggingface.co). This is a plain file download; no personal data is sent. Hugging Face's own [privacy policy](https://huggingface.co/privacy) applies to that connection, as it would to any download.
-2. **A local-only preview server.** The apps you build are served to the app's built-in viewer from a server that runs *inside the app on your device* (localhost). It is not reachable from the internet and sends nothing anywhere.
-
-Once the AI model is downloaded, the built-in assistant runs **entirely on your device, offline**. Your prompts and your code are never sent to us or to any cloud AI service by the built-in assistant.
-
-## Using external AI assistants (optional)
+## Using external AI assistants
 
 Whittle can hand off an app-building prompt to a third-party AI chat assistant of your choice (for example ChatGPT, Claude, or Gemini) and let you paste the result back. If you choose this workflow:
 
 - The prompt and any code you share are sent to that third-party service **by you, through their app or website**, under **their** terms of service and privacy policy.
 - We do not operate, control, or receive anything from those services.
-
-If you prefer to keep everything on-device, use the built-in assistant instead.
 
 ## Notifications
 
@@ -48,8 +41,7 @@ Whittle does not collect personal data from anyone, including children. The apps
 
 | Service | When it's used | What it receives |
 |---|---|---|
-| Hugging Face | Only if you download the on-device AI model | A standard file-download request (no personal data from us) |
-| External AI assistants (ChatGPT, Claude, etc.) | Only if you choose the external-assistant workflow | Whatever you yourself paste or share with them |
+| External AI assistants (ChatGPT, Claude, etc.) | Only if you use the AI assistant workflow | Whatever you yourself paste or share with them |
 | App stores (Google Play / Apple App Store) | Installing and updating the app | Governed by Google's / Apple's own policies |
 
 ## Changes to this policy

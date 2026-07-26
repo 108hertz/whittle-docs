@@ -4,23 +4,6 @@ Welcome to Whittle support. Most questions are answered below — if yours isn't
 
 ## Frequently asked questions
 
-### The AI model download fails or takes very long
-
-The built-in AI assistant needs a one-time download of a language model (approximately **1 GB**).
-
-- Use a **Wi-Fi connection** — the download is large and may stall on weak mobile data.
-- Make sure your device has at least **2 GB of free storage** before starting.
-- If the download was interrupted, reopen the AI setup screen and start it again.
-- Corporate or school networks sometimes block large downloads from huggingface.co; try a different network.
-
-### The built-in AI assistant is slow or unavailable
-
-The assistant runs entirely **on your device** — nothing is sent to the cloud. Performance depends on your hardware:
-
-- Older or low-memory devices generate code noticeably slower. Shorter, more specific prompts finish faster.
-- On some devices with very limited memory, the on-device assistant may be unavailable. You can still build apps using the **external assistant workflow** (share your prompt with ChatGPT, Claude, or another chat assistant, then paste the result back into Whittle).
-- Closing other heavy apps frees memory and speeds up generation.
-
 ### My app preview shows a blank page or an error
 
 Your apps are served by a small server that runs inside Whittle on your device.
@@ -37,7 +20,7 @@ Your apps are served by a small server that runs inside Whittle on your device.
 
 ### I pasted a result from ChatGPT/Claude but nothing was imported
 
-When using an external assistant:
+When using an AI assistant:
 
 - Copy the **entire response**, including the full code blocks — a partial copy can't be imported.
 - Return to Whittle and use the import/paste action on the screen you started from; Whittle reads the result from your clipboard.

@@ -6,7 +6,7 @@ These Terms of Use ("Terms") govern your use of the Whittle mobile application (
 
 ## 1. What Whittle is
 
-Whittle lets you create small web apps (HTML, CSS, and JavaScript) on your device, with the help of an on-device AI assistant and, optionally, external AI chat assistants. Everything you build is stored and runs locally on your device.
+Whittle lets you create small web apps (HTML, CSS, and JavaScript) on your device, with the help of AI chat assistants. Everything you build is stored and runs locally on your device.
 
 ## 2. Your content
 
@@ -16,11 +16,10 @@ Whittle lets you create small web apps (HTML, CSS, and JavaScript) on your devic
 
 ## 3. AI-generated content
 
-Whittle includes an optional on-device AI assistant and supports workflows with third-party AI assistants. You acknowledge that:
+Whittle supports workflows with third-party AI assistants. You acknowledge that:
 
 - AI-generated code and content can be **inaccurate, incomplete, or non-functional**. Review what the AI produces before relying on it.
 - You are responsible for the apps you create with AI assistance, including making sure they don't infringe third-party rights.
-- The on-device model is provided by a third party (Qwen, distributed via Hugging Face) under its own license terms.
 - If you use an external AI assistant (for example ChatGPT, Claude, or Gemini), your use of that service is governed by **that provider's** terms, not these Terms.
 
 ## 4. Acceptable use
@@ -38,7 +37,7 @@ We grant you a personal, non-exclusive, non-transferable, revocable license to u
 
 ## 6. Third-party services
 
-Whittle interacts with third-party services only at your direction (downloading the AI model from Hugging Face, or sharing prompts with an external AI assistant). We are not responsible for the availability, content, or policies of third-party services.
+Whittle interacts with third-party services only at your direction (for example, sharing prompts with an external AI assistant). We are not responsible for the availability, content, or policies of third-party services.
 
 ## 7. Disclaimer of warranties
 
