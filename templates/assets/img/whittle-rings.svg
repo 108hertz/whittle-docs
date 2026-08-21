@@ -1,0 +1,10 @@
+<!-- Whittle "Rings" master mark — Rings / Indigo Apricot handoff.
+     100u master grid: ring centrelines Ø 72/52/32u around (50, 54), stroke 9u,
+     round caps, gaps at 1 o'clock (~40° sweep), core dot Ø 9u.
+     Night variant: indigo→#F4F3F7, apricot→#F5AD78, sky→#6FC3E0. -->
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+  <path d="M75.5 28.5 A36 36 0 1 0 82.6 69.2" stroke="#2A2D66" stroke-width="9"/>
+  <path d="M68.4 35.6 A26 26 0 1 0 73.6 65.0" stroke="#EE9A62" stroke-width="9"/>
+  <path d="M61.3 42.7 A16 16 0 1 0 64.5 60.8" stroke="#4FA8CC" stroke-width="9"/>
+  <circle cx="50" cy="54" r="4.5" fill="#2A2D66"/>
+</svg>

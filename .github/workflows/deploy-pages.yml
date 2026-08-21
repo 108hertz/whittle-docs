@@ -1,0 +1,118 @@
+name: Build and deploy Markdown -> Pages
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Build site directory
+        run: |
+          set -e
+          mkdir -p site/assets
+          # copy all assets (CSS, images, etc.) to the site root so generated pages can reference them
+          cp -r templates/assets/. site/assets/
+          # disable Jekyll processing; not needed for a static Actions artifact
+          touch site/.nojekyll
+
+          # Convert each Markdown file to HTML using the template (keep directory structure flattened).
+          # README.md is the repo's own readme, not a published page — the landing page covers it.
+          #
+          # pandoc does not infer <title> from the first heading, so the template's $title$ needs
+          # explicit metadata — without it every generated page shipped an empty <title> and the
+          # browser tab fell back to showing the raw URL. Each page's own level-1 heading is
+          # already a good title, so reuse it and fall back to the filename if one is missing.
+          git ls-files '*.md' | grep -v '^README\.md$' | while read -r f; do
+            base=$(basename "${f%.*}")
+            title=$(sed -n 's/^# //p' "$f" | head -1)
+            [ -n "$title" ] || title="$base"
+            pandoc "$f" --template=templates/page.html --metadata title="$title" -s -o "site/${base}.html"
+          done
+
+          # The hand-written marketing landing page is the site root. Only when it is missing do we
+          # fall back to a generated list of the converted pages.
+          if [ -f index.html ]; then
+            cp index.html site/index.html
+          else
+            echo "<!doctype html><html><head><meta charset='utf-8'><title>Whittle Docs</title><link rel='stylesheet' href='assets/css/style.css' /></head><body><main><h1>Whittle Docs</h1><ul>" > site/index.html
+            for h in site/*.html; do
+              name=$(basename "$h")
+              echo "<li><a href='${name}'>${name%.*}</a></li>" >> site/index.html
+            done
+            echo "</ul></main></body></html>" >> site/index.html
+          fi
+
+          # Alias spellings for the store-metadata pages. GitHub Pages is case-sensitive, so a
+          # hand-retyped "privacy.html" served a bare 404 while the canonical SCREAMING_CASE page
+          # was fine — and an App Store metadata check reads that 404 as "the URL displays an
+          # error". Emit every plausible spelling as a real 200 page instead.
+          #
+          # Flat aliases are full copies: same directory as the canonical page, so the relative
+          # assets/... links in the template still resolve. Extensionless aliases (/privacy and
+          # /privacy/) are redirect stubs — a copy one level down would resolve assets/... against
+          # the wrong directory and render unstyled.
+          write_redirect() {
+            cat > "$1" <<HTML
+          <!doctype html>
+          <meta charset="utf-8" />
+          <title>Redirecting…</title>
+          <link rel="canonical" href="$2" />
+          <meta http-equiv="refresh" content="0; url=$2" />
+          <p>Redirecting to <a href="$2">$2</a>.</p>
+          HTML
+          }
+
+          add_aliases() {
+            canonical="$1"
+            shift
+            if [ ! -f "site/${canonical}.html" ]; then
+              echo "add_aliases: no generated page for ${canonical}" >&2
+              exit 1
+            fi
+            for a in "$@"; do
+              cp "site/${canonical}.html" "site/${a}.html"
+              mkdir -p "site/${a}"
+              write_redirect "site/${a}/index.html" "../${a}.html"
+            done
+          }
+
+          add_aliases PRIVACY_POLICY privacy_policy privacy-policy privacy
+          add_aliases SUPPORT support help
+          add_aliases TERMS_OF_USE terms_of_use terms-of-use terms
+
+          # Served by Pages for any unmatched path, so a near-miss URL lands on a branded page
+          # offering the real Privacy and Support links rather than GitHub's stock error screen.
+          cp 404.html site/404.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
